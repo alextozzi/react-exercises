@@ -6,30 +6,32 @@ import { Menu } from './Menu'
 
 export class App extends Component {
 	constructor(props) {
-		super(props)
-		this.state = {
-			allSkiDays: [
-			{
-				resort: "Squaw Valley",
-				date: new Date("1/2/2016"),
-				powder: true,
-				backcountry: false
-			},
-			{
-				resort: "Kirkwood",
-				date: new Date("3/28/2016"),
-				powder: false,
-				backcountry: false
-			},
-			{
-				resort: "Mt. Tallac",
-				date: new Date("4/2/2016"),
-				powder: false,
-				backcountry: true
-			}
-		]
+        super(props)
+        this.state = {
+            allSkiDays: [
+                {
+                    resort: "Squaw Valley",
+                    date: "2016-06-12",
+                    powder: true,
+                    backcountry: false
+                },
+
+            ]
+        }
+        this.addDay= this.addDay.bind(this)
+    }
+		addDay(newDay) {
+			this.setState({
+				allSkiDays: [
+					...this.state.allSkiDays,
+					newDay
+				]
+			})
 		}
-	}
+
+
+
+
 	countDays(filter) {
 		const { allSkiDays } = this.state
 		return allSkiDays.filter(
@@ -48,7 +50,7 @@ export class App extends Component {
 							 		"backcountry"
 							 	)}/> :
 			 (this.props.location.pathname === "/add-day") ?
-			 	<AddDayForm /> :
+			 	<AddDayForm onNewDay={this.addDay}/> :
 			 	<SkiDayList days={this.state.allSkiDays}
 			 				filter={this.props.params.filter}/>				 
 			}
